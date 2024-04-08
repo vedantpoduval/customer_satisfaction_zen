@@ -1,3 +1,1 @@
-def yo(data:int):
-    return data
-print(yo("Hi"))
+from steps import data_cleaning 
