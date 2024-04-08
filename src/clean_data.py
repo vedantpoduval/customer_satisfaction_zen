@@ -44,7 +44,7 @@ class DataPreProcessStrategy(DataStrategy):
 
             data = data.select_dtypes(include=[np.number])
 
-            return data.head()
+            return data
         except Exception as e:
             logging.error(e)
             raise e
@@ -73,7 +73,7 @@ class DataCleaning:
     
     """
     def __init__(self, data: pd.DataFrame , strategy: DataStrategy) -> None:
-        self.data = data
+        self.df = data
         self.strategy = strategy
    
     def handle_data(self) -> Union[pd.DataFrame,pd.Series]:
@@ -82,7 +82,7 @@ class DataCleaning:
         
         """
         try:
-            return self.strategy.handle_data(self.data)
+            return self.strategy.handle_data(self.df)
         except Exception as e:
             logging.error("Error in handling data: {}".format(e))
             raise e

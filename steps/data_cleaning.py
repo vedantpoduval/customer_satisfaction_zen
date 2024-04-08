@@ -9,8 +9,8 @@ from typing import Tuple
 def cleaning_data(data:pd.DataFrame) -> Tuple[
     Annotated[pd.DataFrame, "X_train"],
     Annotated[pd.DataFrame, "X_test"],
-    Annotated[pd.DataFrame, "y_train"],
-    Annotated[pd.DataFrame, "y_test"],
+    Annotated[pd.Series, "y_train"],
+    Annotated[pd.Series, "y_test"],
 ]:
     """
     Cleans the data and divides it into train and test
@@ -19,8 +19,9 @@ def cleaning_data(data:pd.DataFrame) -> Tuple[
     try:
         data_cleaning = DataCleaning(data,DataPreProcessStrategy())
         processed_data = data_cleaning.handle_data()
-        data_cleaning = DataCleaning(data,DataDivideStrategy)
+        data_cleaning = DataCleaning(processed_data,DataDivideStrategy())
         X_train,X_test,y_train,y_test = data_cleaning.handle_data()
+        return X_train,X_test,y_train,y_test
         logging.info("Data Cleaning Completed")
     except Exception as e:
         logging.error(f"Error in cleaning data: {e}")
